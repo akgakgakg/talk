@@ -8,20 +8,20 @@ const program = require('commander');
 const client = new speech.SpeechClient();
 
 program
-  .option('-i, --infile [path]', 'Audio file to be transcribe')
-  .option('-e, --encoding [enc]', 'Audio file encoding: "LINEAR16" | ...  ')
+  .option('-u, --uri [path]', 'GCS uri to audio file to be transcribed')
+  .option('-e, --encoding [encoding]', 'Audio file encoding: "LINEAR16" | ...  ')
   .option('-s, --samplerate [rate]', 'Audio file sample rate in hertz: 22050')
-  .option('-l, --language [rate]', 'Language code: "en-UK"')
+  .option('-l, --language [lang]', 'Language code: "en-UK"')
   .parse(process.argv);
 
 
-let filename = program.infile || './providence.wav'
+let uri = program.uri || 'gs://talkbucket/shorttestmono.wav'
 let encoding = program.encoding || 'LINEAR16'
-let sampleRateHertz = program.samplerate || 22050
+let sampleRateHertz = program.samplerate || 44100
 let languageCode = program.language || 'en-UK'
 
 console.log('')
-console.log('Audio file:', filename) 
+console.log('GCS Uri:', uri) 
 console.log('Encoding:', encoding) 
 console.log('Sample rate:', sampleRateHertz) 
 console.log('Language code:', languageCode) 
@@ -34,7 +34,8 @@ const config = {
 };
 
 const audio = {
-  content: fs.readFileSync(filename).toString('base64'),
+  //content: fs.readFileSync(filename).toString('base64'),
+  uri: uri //'gs://talkbucket/shorttestmono.wav',
 };
 
 const request = {
@@ -50,6 +51,13 @@ const run = async function() {
     .map(result => result.alternatives[0].transcript)
     .join('\n');
   console.log(`Transcription: `, transcription);
+
+  // Try saving to file
+  fs.writeFile("transcription.txt", transcription, (err) => {
+    if (err)
+      console.log(err);
+    console.log("Successfully Written to File.");
+  });
 }
 
 run()
