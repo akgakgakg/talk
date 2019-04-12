@@ -11,16 +11,19 @@ program
   .option('-u, --uri [path]', 'GCS uri to audio file to be transcribed')
   .option('-t, --transcript [path]', 'Filename of transcript text file')
   .option('-e, --encoding [encoding]', 'Audio file encoding: "LINEAR16" | ...  ')
-  .option('-s, --samplerate [rate]', 'Audio file sample rate in hertz: 22050')
-  .option('-l, --language [lang]', 'Language code: "en-UK"')
+  .option('-s, --samplerate [rate]', 'Audio file sample rate in hertz: 22050', parseInt)
+  .option('-l, --language [lang]', 'Language code: "en-US"')
+  .option('-m, --model [model]', 'Enhanced model: "default" | "video"')
   .parse(process.argv);
 
 
+// Defaults
 let uri = program.uri || 'gs://talkbucket/shorttestmono.wav'
 let encoding = program.encoding || 'LINEAR16'
 let sampleRateHertz = program.samplerate || 44100
-let languageCode = program.language || 'en-UK'
+let languageCode = program.language || 'en-US'
 let transcriptFileName = program.transcript || 'transcript.txt'
+let model = program.model || 'video' 
 
 console.log('')
 console.log('GCS Uri:', uri) 
@@ -34,10 +37,11 @@ const config = {
   encoding: encoding,
   sampleRateHertz: sampleRateHertz,
   languageCode: languageCode,
+  useEnhanced: true,
+  model: model,
 };
 
 const audio = {
-  //content: fs.readFileSync(filename).toString('base64'),
   uri: uri //'gs://talkbucket/shorttestmono.wav',
 };
 
@@ -59,7 +63,7 @@ const run = async function() {
   fs.writeFile(transcriptFileName, transcription, (err) => {
     if (err)
       console.log(err);
-    console.log("\nSuccessfully Written to File:", transcriptFileName);
+    console.log("\nSuccessfully written to file:", transcriptFileName);
   });
 }
 

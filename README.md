@@ -6,7 +6,7 @@
 ```
 set GOOGLE_APPLICATION_CREDENTIALS=C:\Material\github\talk\talk\credentials.json
 
-node test.js --uri "gs://talkbucket/providence.wav" --samplerate 22050 --transcript "providence.txt" --language="en-UK" --encoding "LINEAR16"
+node index --uri "gs://talkbucket/providence.wav" --samplerate 22050 --transcript "providence.txt" --language="en-UK" --encoding "LINEAR16"
 ```
 
 Transcript paths could be: `..\mytranscript.txt` or `C:\path\to\transcript.txt`
