@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/akgakgakg/talk#readme",
   "dependencies": {
-    "@google-cloud/speech": "^2.3.1"
+    "@google-cloud/speech": "^2.3.1",
+    "commander": "^2.20.0"
   }
 }
