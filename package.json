@@ -1,0 +1,22 @@
+{
+  "name": "talk",
+  "version": "1.0.0",
+  "description": "Let's do this!",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akgakgakg/talk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akgakgakg/talk/issues"
+  },
+  "homepage": "https://github.com/akgakgakg/talk#readme",
+  "dependencies": {
+    "@google-cloud/speech": "^2.3.1"
+  }
+}
