@@ -9,6 +9,7 @@ const client = new speech.SpeechClient();
 
 program
   .option('-u, --uri [path]', 'GCS uri to audio file to be transcribed')
+  .option('-t, --transcript [path]', 'Filename of transcript text file')
   .option('-e, --encoding [encoding]', 'Audio file encoding: "LINEAR16" | ...  ')
   .option('-s, --samplerate [rate]', 'Audio file sample rate in hertz: 22050')
   .option('-l, --language [lang]', 'Language code: "en-UK"')
@@ -19,9 +20,11 @@ let uri = program.uri || 'gs://talkbucket/shorttestmono.wav'
 let encoding = program.encoding || 'LINEAR16'
 let sampleRateHertz = program.samplerate || 44100
 let languageCode = program.language || 'en-UK'
+let transcriptFileName = program.transcript || 'transcript.txt'
 
 console.log('')
 console.log('GCS Uri:', uri) 
+console.log('Transcript:', transcriptFileName) 
 console.log('Encoding:', encoding) 
 console.log('Sample rate:', sampleRateHertz) 
 console.log('Language code:', languageCode) 
@@ -53,10 +56,10 @@ const run = async function() {
   console.log(`Transcription: `, transcription);
 
   // Try saving to file
-  fs.writeFile("transcription.txt", transcription, (err) => {
+  fs.writeFile(transcriptFileName, transcription, (err) => {
     if (err)
       console.log(err);
-    console.log("Successfully Written to File.");
+    console.log("\nSuccessfully Written to File:", transcriptFileName);
   });
 }
 
