@@ -44,7 +44,8 @@ const request = {
 
 // Detects speech in the audio file
 const run = async function() {
-  const [response] = await client.recognize(request);
+  const [operation] = await client.longRunningRecognize(request);
+  const [response] = await operation.promise();
   const transcription = response.results
     .map(result => result.alternatives[0].transcript)
     .join('\n');
